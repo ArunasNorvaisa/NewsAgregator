@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
+import NewsList from './news_list';
 
 class Top20 extends Component {
     constructor(props) {
         super(props);
+        this.filterNews = this.filterNews.bind(this);
         this.state = {
             error: null,
             isLoaded: false,
-            top20Items: []
+            top20Items: { articles: [] }
         };
+    }
+
+    filterNews() {
+        return {
+            articles: this.state.top20Items.articles.filter((item) => {
+                return (this.props.keywords === '') || (item.description.indexOf(this.props.keywords) > 0);
+            })
+        }
     }
 
     componentDidMount() {
@@ -17,8 +27,18 @@ class Top20 extends Component {
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        top20Items: result.items
-                    });
+                        top20Items: {
+                            articles: result.articles.map((item) => {
+                                if (!item.urlToImage) {
+                                    item.urlToImage = 'http://arunas.org/images/no-image.png';
+                                }
+                                if (!item.description) {
+                                    item.description = 'Pilną straipsnio tekstą ';
+                                }
+                                return item;
+                            })
+                        }
+                    })
                 },
                 (error) => {
                     this.setState({
@@ -30,13 +50,13 @@ class Top20 extends Component {
     }
 
     render() {
-        const { error, isLoaded, top20Items } = this.state;
+        const { error, isLoaded } = this.state;
         if (error) {
             return <div > Error: { error.message } </div>;
         } else if (!isLoaded) {
             return <div> Loading... </div>;
         } else {
-            return this.state.top20Items;
+            return <NewsList news={this.filterNews()} />;
         }
     }
 }

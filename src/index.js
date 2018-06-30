@@ -2,26 +2,20 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Top from './components/virsus';
 import Header from './components/header';
-import NewsList from './components/news_list';
-import Top20 from './components/top20'
+import Top20 from './components/top20';
 import Footer from './components/footer';
-import JSON from './db.json';
 
 class App extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            news: JSON,
-            filtered: JSON
+            keywords: ''
         }
     }
 
     searchNews(keywords) {
-        let filtered = this.state.news.articles.filter((item) => {
-            return item.description.indexOf(keywords) > 0;
-        });
-        this.setState({filtered: { articles: filtered }});
+        this.setState({keywords});
     }
 
     render() {
@@ -29,7 +23,7 @@ class App extends Component {
             <div className="container">
                 <Top />
                 <Header newsSearch={keywords => this.searchNews(keywords)} />
-                <NewsList news={this.state.filtered} />
+                <Top20 keywords={this.state.keywords}/>
                 <Footer />
             </div>
         );
