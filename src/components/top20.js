@@ -15,7 +15,7 @@ class Top20 extends Component {
     filterNews() {
         return {
             articles: this.state.top20Items.articles.filter((item) => {
-                return (this.props.keywords === '') || (item.description.indexOf(this.props.keywords) > 0);
+                return item.description.indexOf(this.props.keywords) > -1;
             })
         }
     }
@@ -54,7 +54,7 @@ class Top20 extends Component {
         if (error) {
             return <div > Error: { error.message } </div>;
         } else if (!isLoaded) {
-            return <div> Loading... </div>;
+            return <div> Naujienos kraunasi... </div>;
         } else {
             return <NewsList news={this.filterNews()} />;
         }

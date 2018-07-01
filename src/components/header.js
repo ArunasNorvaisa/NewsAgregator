@@ -5,9 +5,6 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.startSearch = this.startSearch.bind(this);
-        this.state = {
-            keywords: ''
-        }
     }
 
     startSearch(event) {
