@@ -5,13 +5,29 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.startSearch = this.startSearch.bind(this);
+        this.categoryChange = this.categoryChange.bind(this);
+        this.inputChange = this.inputChange.bind(this);
+        this.state = {
+            keywords: '',
+            newsCategory: 'top20',
+            inputValue: ''
+        }
     }
 
     startSearch(event) {
         event.preventDefault();
-        const input = document.getElementById("forma").elements["searchString"].value;
-        this.setState({keywords:input});
-        this.props.newsSearch(input);
+        this.setState({keywords: this.state.inputValue});
+        this.props.newsSearch(this.state.inputValue);
+    }
+
+    categoryChange(event) {
+        this.props.newsSearch('');
+        this.setState({newsCategory: event.target.id, keywords: '', inputValue: ''});
+        this.props.url(event.target.id);
+    }
+
+    inputChange(event) {
+        this.setState({inputValue: event.target.value});
     }
 
     render() {
@@ -28,21 +44,22 @@ class Header extends Component {
                         <div className="collapse navbar-collapse" id="baras">
                             <ul className="navbar-nav">
                                 <li className="nav-item">
-                                    <a className="nav-link active" href="http://yahoo.com" target="_top">Top-20</a>
+                                    <div id="top20" className="nav-link" onClick={this.categoryChange}>Top-20</div>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="http://yahoo.com" target="_top">Verslas</a>
+                                    <div id="business" className="nav-link" onClick={this.categoryChange}>Verslas</div>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="http://yahoo.com" target="_top">Pramogos</a>
+                                    <div id="entertainment" className="nav-link" onClick={this.categoryChange}>Pramogos</div>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="http://yahoo.com" target="_top">Sportas</a>
+                                    <div id="sports" className="nav-link" onClick={this.categoryChange}>Sportas</div>
                                 </li>
                             </ul>
                             <form className="form-inline my-2 my-xl-0 ml-auto" onSubmit={this.startSearch} id="forma">
                                 <input className="form-control mr-sm-2" type="text" placeholder="Paieška"
-                                       aria-label="Search" name="searchString" />
+                                       aria-label="Search" name="searchString" onChange={this.inputChange}
+                                       value={this.state.inputValue} />
                                 <button className="btn btn-outline-success my-2 my-sm-0" type="submit">
                                     Paieška
                                 </button>

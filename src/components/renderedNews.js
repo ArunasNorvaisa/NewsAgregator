@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import NewsList from './news_list';
 
-class Top20 extends Component {
+class RenderedNews extends Component {
     constructor(props) {
         super(props);
         this.filterNews = this.filterNews.bind(this);
@@ -20,8 +20,10 @@ class Top20 extends Component {
         }
     }
 
-    componentDidMount() {
-        fetch("https://newsapi.org/v2/top-headlines?country=lt&apiKey=API_KEY")
+    loadNews(newsURL) {
+        this.setState({isLoaded: false});
+
+        fetch(newsURL)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -49,6 +51,14 @@ class Top20 extends Component {
             )
     }
 
+    componentWillReceiveProps(newProps) {
+        this.loadNews(newProps.newsURL);
+    }
+
+    componentDidMount() {
+        this.loadNews(this.props.newsURL);
+    }
+
     render() {
         const { error, isLoaded } = this.state;
         if (error) {
@@ -56,9 +66,9 @@ class Top20 extends Component {
         } else if (!isLoaded) {
             return <div> Naujienos kraunasi... </div>;
         } else {
-            return <NewsList news={this.filterNews()} />;
+            return <NewsList news={ this.filterNews() } />;
         }
     }
 }
 
-export default Top20;
+export default RenderedNews;

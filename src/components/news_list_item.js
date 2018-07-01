@@ -10,16 +10,16 @@ const NewsItem = (props) => {
     }
     return (
         <div className="newsItem">
-            <img src={props.item.urlToImage} className="newsImage" alt={props.item.title} />
-            <h3>{props.item.title}</h3>
-            <span className="newsTime">{publishedAt.toLocaleString('lt-LT')}</span>
-            <span className="newsSource">{props.item.source.name}</span>
+            <img src={ props.item.urlToImage } className="newsImage" alt={ props.item.title } />
+            <h3>{ props.item.title }</h3>
+            <span className="newsTime">{ publishedAt.toLocaleString('lt-LT') }</span>
+            <span className="newsSource">{ props.item.source.name }</span>
             <hr />
-            <div className="newsDescription">{props.item.description}
-                <a href={props.item.url} target="_top">...skaitykite toliau</a>
+            <div className="newsDescription">{ props.item.description }
+                <a href={ props.item.url } target="_top">...skaitykite toliau</a>
             </div>
         </div>
     );
-}
+};
 
 export default NewsItem;

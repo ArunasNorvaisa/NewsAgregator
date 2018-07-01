@@ -2,6 +2,10 @@
     background-color: #000 !important;
 }
 
+li .nav-link {
+    cursor: pointer;
+}
+
 .newsItem {
     display: block;
     overflow: hidden;
@@ -15,7 +19,6 @@
 }
 
 .newsTime, .newsSource {
-    float: clear;
     font-size: 0.8rem;
     font-family: cursive;
     text-transform: uppercase;
